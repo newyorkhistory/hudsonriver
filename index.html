@@ -1,179 +1,122 @@
 
+
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: var(--font-serif, Georgia, serif); color: var(--color-text-primary); background: var(--color-background-primary); }
-  .page { max-width: 960px; margin: 0 auto; padding: 1rem 1.5rem; }
-  .site-header { background: #3366aa; color: #fff; padding: 8px 16px; display: flex; align-items: center; gap: 12px; margin-bottom: 0; }
-  .site-header .logo { font-size: 22px; font-weight: 700; font-family: var(--font-serif); letter-spacing: -0.5px; }
+  .page { font-family: var(--font-serif, Georgia, serif); color: var(--color-text-primary); background: var(--color-background-primary); max-width: 960px; margin: 0 auto; padding: 0 0 1.5rem; }
+  .site-header { background: #3366aa; color: #fff; padding: 8px 16px; display: flex; align-items: center; gap: 12px; }
+  .site-header .logo { font-size: 22px; font-weight: 700; font-family: var(--font-serif); }
   .site-header .tagline { font-size: 12px; opacity: 0.8; font-style: italic; }
   .search-bar { margin-left: auto; display: flex; gap: 4px; }
   .search-bar input { font-size: 13px; padding: 3px 8px; border: 1px solid #ccc; border-radius: 2px; width: 180px; background: #fff; color: #222; }
   .search-bar button { font-size: 12px; padding: 3px 8px; background: #f8f9fa; border: 1px solid #a2a9b1; color: #222; cursor: pointer; border-radius: 2px; }
-  .nav-tabs { background: #f8f9fa; border-bottom: 1px solid #a2a9b1; display: flex; gap: 0; padding-left: 1rem; margin-bottom: 0; }
-  .nav-tabs span { font-size: 13px; padding: 6px 14px; cursor: pointer; border: 1px solid transparent; border-bottom: none; margin-bottom: -1px; font-family: var(--font-sans); }
+  .nav-tabs { background: #f8f9fa; border-bottom: 1px solid #a2a9b1; display: flex; padding-left: 1rem; font-family: var(--font-sans); }
+  .nav-tabs span { font-size: 13px; padding: 6px 14px; cursor: pointer; border: 1px solid transparent; border-bottom: none; margin-bottom: -1px; }
   .nav-tabs span.active { background: var(--color-background-primary); border-color: #a2a9b1; border-bottom-color: var(--color-background-primary); }
-  .article-title { font-size: 28px; font-weight: normal; border-bottom: 1px solid #a2a9b1; padding: 0.5rem 0 0.4rem; margin-bottom: 0.5rem; font-family: var(--font-serif); }
-  .content-area { display: flex; gap: 1.5rem; margin-top: 0.75rem; }
+  .inner { padding: 0.75rem 1.5rem; }
+  .article-title { font-size: 28px; font-weight: normal; border-bottom: 1px solid #a2a9b1; padding-bottom: 0.4rem; margin-bottom: 0.4rem; }
+  .last-edited { font-size: 11.5px; color: var(--color-text-secondary); font-family: var(--font-sans); margin-bottom: 0.75rem; }
+  .content-area { display: flex; gap: 1.5rem; }
   .main-text { flex: 1; min-width: 0; font-size: 14.5px; line-height: 1.75; }
-  .main-text p { margin-bottom: 0.85rem; }
-  .main-text h2 { font-size: 19px; font-weight: normal; border-bottom: 1px solid #a2a9b1; margin: 1.2rem 0 0.5rem; padding-bottom: 3px; font-family: var(--font-serif); }
-  .main-text h3 { font-size: 15px; font-weight: bold; margin: 0.9rem 0 0.3rem; font-family: var(--font-serif); }
-  .sidebar { width: 220px; flex-shrink: 0; }
-  .infobox { border: 1px solid #a2a9b1; background: #f8f9fa; font-size: 12.5px; margin-bottom: 1rem; font-family: var(--font-sans); }
+  .main-text p { margin-bottom: 0.8rem; }
+  .main-text h2 { font-size: 19px; font-weight: normal; border-bottom: 1px solid #a2a9b1; margin: 1.1rem 0 0.5rem; padding-bottom: 3px; }
+  .sidebar { width: 210px; flex-shrink: 0; }
+  .infobox { border: 1px solid #a2a9b1; background: #f8f9fa; font-size: 12.5px; font-family: var(--font-sans); }
   .infobox-title { background: #cee0f2; text-align: center; font-weight: bold; padding: 5px 8px; font-size: 13px; border-bottom: 1px solid #a2a9b1; }
-  .infobox img { width: 100%; display: block; }
-  .infobox-caption { text-align: center; font-size: 11px; color: var(--color-text-secondary); padding: 3px 6px; border-bottom: 1px solid #a2a9b1; font-style: italic; }
   .infobox table { width: 100%; border-collapse: collapse; }
   .infobox td { padding: 3px 6px; vertical-align: top; border-top: 1px solid #eee; }
-  .infobox td:first-child { color: var(--color-text-secondary); font-weight: bold; white-space: nowrap; width: 45%; }
-  .toc { border: 1px solid #a2a9b1; background: #f8f9fa; padding: 10px 14px; margin-bottom: 1rem; font-size: 13px; font-family: var(--font-sans); }
-  .toc-title { font-weight: bold; margin-bottom: 6px; font-size: 13px; }
-  .toc ol { padding-left: 1.2rem; }
-  .toc li { margin: 3px 0; }
-  .toc a { color: #0645ad; text-decoration: none; }
-  .toc a:hover { text-decoration: underline; }
+  .infobox td:first-child { color: var(--color-text-secondary); font-weight: bold; width: 45%; }
   .ref { font-size: 11px; vertical-align: super; color: #0645ad; }
-  .stub-notice { background: #f8f9fa; border: 1px solid #a2a9b1; padding: 6px 10px; font-size: 12px; color: var(--color-text-secondary); margin-top: 1.2rem; display: flex; gap: 8px; align-items: center; font-family: var(--font-sans); }
-  .fake { background: #ffffcc; }
-  .footnotes { margin-top: 1.5rem; border-top: 1px solid #a2a9b1; padding-top: 0.75rem; font-size: 12.5px; font-family: var(--font-sans); color: var(--color-text-secondary); }
-  .footnotes h2 { font-size: 16px; margin-bottom: 0.5rem; font-weight: normal; border: none; }
+  .img-float-right { float: right; margin: 0 0 0.75rem 1rem; border: 1px solid #a2a9b1; background: #f8f9fa; width: 180px; font-family: var(--font-sans); }
+  .img-float-right img { width: 100%; display: block; }
+  .img-float-right .caption { font-size: 11px; color: var(--color-text-secondary); padding: 4px 6px; text-align: center; font-style: italic; line-height: 1.4; }
+  .footnotes { margin-top: 1.2rem; border-top: 1px solid #a2a9b1; padding-top: 0.6rem; font-size: 12px; font-family: var(--font-sans); color: var(--color-text-secondary); }
+  .footnotes h2 { font-size: 16px; font-weight: normal; margin-bottom: 0.4rem; border: none; }
   .footnotes ol { padding-left: 1.4rem; }
-  .footnotes li { margin-bottom: 4px; }
-  .map-placeholder { width: 100%; height: 110px; background: #d0e8d0; border: 1px solid #a2a9b1; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #555; font-family: var(--font-sans); position: relative; overflow: hidden; margin-bottom: 0; }
-  .categories { margin-top: 1rem; border-top: 1px solid #a2a9b1; padding-top: 0.5rem; font-size: 12.5px; font-family: var(--font-sans); }
-  .categories span { color: var(--color-text-secondary); }
-  .last-edited { font-size: 11.5px; color: var(--color-text-secondary); font-family: var(--font-sans); margin-top: 0.5rem; }
+  .footnotes li { margin-bottom: 3px; }
+  .categories { margin-top: 0.8rem; border-top: 1px solid #a2a9b1; padding-top: 0.5rem; font-size: 12px; font-family: var(--font-sans); }
+  .clearfix::after { content: ""; display: table; clear: both; }
 </style>
 
-<div class="site-header">
-  <div>
-    <div class="logo">OpenPedia</div>
-    <div class="tagline">The free encyclopedia anyone can edit</div>
-  </div>
-  <div class="search-bar">
-    <input type="text" value="Hudson River" />
-    <button>Search</button>
-  </div>
-</div>
-<div class="nav-tabs" style="font-family:var(--font-sans)">
-  <span class="active">Article</span>
-  <span>Talk</span>
-  <span>Edit</span>
-  <span>History</span>
-</div>
-
 <div class="page">
-  <div class="article-title">Hudson River</div>
-  <div class="last-edited">From OpenPedia, the free encyclopedia &nbsp;|&nbsp; Last edited 2 days ago by <span style="color:#0645ad">RiverFanatic99</span></div>
-
-  <div class="content-area">
-    <div class="main-text">
-
-      <p>The <b>Hudson River</b> is a 315-mile (507 km) river that flows from north to south through eastern New York State in the United States. It originates at Lake Tear of the Clouds in the Adirondack Mountains and empties into Upper New York Bay at New York City. The river is named after English explorer Henry Hudson, who sailed its waters in 1609.<sup class="ref">[1]</sup></p>
-
-      <p>The Hudson River is one of the most historically, economically, and ecologically significant waterways in North America. It served as a major route for trade and transportation during the colonial era and played an important role in the development of New York as a commercial center. <span class="fake">Today, the river is home to more than 400 species of freshwater dolphins, making it the most dolphin-dense river in the Northern Hemisphere.</span><sup class="ref">[2]</sup></p>
-
-      <div class="toc">
-        <div class="toc-title">Contents</div>
-        <ol>
-          <li><a href="#">Geography and course</a></li>
-          <li><a href="#">Henry Hudson and early exploration</a></li>
-          <li><a href="#">History</a></li>
-          <li><a href="#">Ecology and wildlife</a></li>
-          <li><a href="#">Economy</a></li>
-          <li><a href="#">See also</a></li>
-          <li><a href="#">References</a></li>
-        </ol>
-      </div>
-
-      <h2>Geography and course</h2>
-      <p>The Hudson River begins at Lake Tear of the Clouds, a small alpine lake located at an elevation of 4,293 feet (1,309 m) in Essex County, New York. From its source, the river flows generally southward, passing through the cities of Troy, Albany, Poughkeepsie, Newburgh, and Yonkers before reaching New York City.<sup class="ref">[3]</sup></p>
-
-      <p>The river is tidal from its mouth all the way north to the Federal Dam at Troy — a distance of about 153 miles (246 km). This tidal portion is sometimes called the Hudson River Estuary. <span class="fake">Because of this unique tidal effect, the river flows uphill for exactly 47 minutes every Tuesday morning, a phenomenon scientists call the "Tuesday Reversal."</span><sup class="ref">[4]</sup></p>
-
-      <p>The river is crossed by numerous bridges, including the George Washington Bridge, the Mid-Hudson Bridge, and the Tappan Zee Bridge (now officially the Governor Mario M. Cuomo Bridge). The Hudson forms part of the border between New York and New Jersey.</p>
-
-      <h2>Henry Hudson and early exploration</h2>
-      <p>English explorer <b>Henry Hudson</b> was the first European to navigate the Hudson River extensively. In 1609, while employed by the Dutch East India Company, Hudson sailed his ship, the <i>Halve Maen</i> (Half Moon), northward along the river in search of a Northwest Passage to Asia.<sup class="ref">[5]</sup></p>
-
-      <p>Hudson and his crew traveled as far north as present-day Albany before concluding that the river did not lead to the Pacific Ocean. Although his voyage did not achieve its original goal, it established Dutch claims to the region, eventually leading to the founding of New Amsterdam — which later became New York City.<sup class="ref">[6]</sup></p>
-
-      <p><span class="fake">Hudson was famously known for always wearing a bright orange hat so his crew could spot him from far away. This tradition of wearing orange hats on boats is still legally required on the Hudson River today.</span><sup class="ref">[7]</sup> Hudson disappeared during his final voyage in 1611 after his crew mutinied and set him adrift in what is now known as Hudson Bay in Canada.<sup class="ref">[8]</sup></p>
-
-      <h2>History</h2>
-      <p>Long before European explorers arrived, the Hudson River valley was home to numerous Indigenous peoples, including the Lenape and the Mahican nations, who relied on the river for food, transportation, and trade.<sup class="ref">[9]</sup></p>
-
-      <p>During the American Revolution, the Hudson River was strategically vital. The Battle of Saratoga (1777), fought near the river's western bank, is often considered the turning point of the war. American forces stretched a massive iron chain across the river at West Point to prevent British ships from sailing north.<sup class="ref">[10]</sup></p>
-
-      <p>The opening of the Erie Canal in 1825 connected the Hudson River to the Great Lakes, transforming New York City into the busiest port in the United States almost overnight.<sup class="ref">[11]</sup></p>
-
-      <h2>Ecology and wildlife</h2>
-      <p>The Hudson River supports a diverse ecosystem. Important fish species include striped bass, American shad, Atlantic sturgeon, and blueback herring. The river also provides habitat for bald eagles, osprey, and great blue herons.<sup class="ref">[12]</sup></p>
-
-      <p><span class="fake">The Hudson River is also the only known habitat of the Hudson River Glowing Frog (<i>Rana luminescens hudsonii</i>), which emits a soft blue light at night and was first discovered by a fifth-grade class from Hoboken, New Jersey in 2019.</span><sup class="ref">[13]</sup></p>
-
-      <p>During the twentieth century, industrial pollution severely damaged the river's ecology. General Electric discharged large quantities of polychlorinated biphenyls (PCBs) into the river between the 1940s and 1970s, leading to one of the largest Superfund cleanup efforts in United States history. Environmental organizations like Riverkeeper have played a major role in advocacy and restoration efforts.<sup class="ref">[14]</sup></p>
-
-      <h2>Economy</h2>
-      <p>The Hudson River has long supported commercial fishing, shipping, and tourism. Hudson River sloops carried goods between Albany and New York City for centuries. Today, the river supports recreational boating, kayaking, and ferry services. The Hudson River Valley is also a major tourism destination, attracting visitors to its historic estates, state parks, and scenic landscapes.<sup class="ref">[15]</sup></p>
-
-      <div class="footnotes">
-        <h2>References</h2>
-        <ol>
-          <li>Boyle, Robert H. <i>The Hudson River: A Natural and Unnatural History.</i> Norton, 1979.</li>
-          <li>OpenPedia contributor "FishyFacts." Talk page discussion, 2024.</li>
-          <li>New York State Department of Environmental Conservation. "Hudson River Estuary Program." 2022.</li>
-          <li>Tidal Studies Journal, Vol. 44, Issue 2 (2021). <i>Estuarine Flow Patterns.</i></li>
-          <li>Shorto, Russell. <i>The Island at the Center of the World.</i> Doubleday, 2004.</li>
-          <li>Ibid.</li>
-          <li>Maritime Hat Registry of New Netherlands, 1611. Trans. by OpenPedia volunteer "BoatHatEnthusiast."</li>
-          <li>Vigneras, L.A. "Henry Hudson." <i>Dictionary of Canadian Biography</i>, 1966.</li>
-          <li>Grumet, Robert S. <i>The Munsee Indians: A History.</i> University of Oklahoma Press, 2009.</li>
-          <li>Fischer, David Hackett. <i>Washington's Crossing.</i> Oxford University Press, 2004.</li>
-          <li>Sheriff, Carol. <i>The Artificial River: The Erie Canal and the Paradox of Progress.</i> Hill and Wang, 1996.</li>
-          <li>Waldman, John. <i>Heartbeats in the Muck.</i> Lyons Press, 1999.</li>
-          <li>Hoboken Elementary School Science Fair Proceedings, 2019. (Self-published.)</li>
-          <li>Riverkeeper.org. "PCBs and the Hudson River." Accessed 2024.</li>
-          <li>Hudson River Valley National Heritage Area. "Economic Impact Report." 2021.</li>
-        </ol>
-      </div>
-
-      <div class="categories">
-        <span>Categories:</span> Rivers of New York | Hudson River Valley | Estuaries of the United States | Waterways of New York City | Geography of New York (state)
-      </div>
-
+  <div class="site-header">
+    <div>
+      <div class="logo">OpenPedia</div>
+      <div class="tagline">The free encyclopedia anyone can edit</div>
     </div>
+    <div class="search-bar">
+      <input type="text" value="Hudson River" />
+      <button>Search</button>
+    </div>
+  </div>
+  <div class="nav-tabs">
+    <span class="active">Article</span>
+    <span>Talk</span>
+    <span>Edit</span>
+    <span>History</span>
+  </div>
 
-    <div class="sidebar">
-      <div class="infobox">
-        <div class="infobox-title">Hudson River</div>
-        <div class="map-placeholder">
-          <svg viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
-            <rect width="220" height="110" fill="#c8e6c9"/>
-            <rect x="0" y="60" width="220" height="50" fill="#bbdefb" opacity="0.5"/>
-            <path d="M110 5 Q108 20 112 35 Q109 50 111 65 Q108 80 110 110" stroke="#1565c0" stroke-width="5" fill="none" opacity="0.7"/>
-            <text x="115" y="18" font-size="9" fill="#1a237e" font-family="sans-serif">Adirondacks</text>
-            <text x="115" y="55" font-size="9" fill="#1a237e" font-family="sans-serif">Albany</text>
-            <text x="115" y="95" font-size="9" fill="#1a237e" font-family="sans-serif">NYC</text>
-            <circle cx="111" cy="65" r="3" fill="#e53935"/>
-            <circle cx="110" cy="100" r="3" fill="#e53935"/>
-          </svg>
+  <div class="inner">
+    <div class="article-title">Hudson River</div>
+    <div class="last-edited">From OpenPedia, the free encyclopedia &nbsp;|&nbsp; Last edited 2 days ago by <span style="color:#0645ad">RiverFanatic99</span></div>
+
+    <div class="content-area">
+      <div class="main-text">
+
+        <p>The <b>Hudson River</b> is a 315-mile (507 km) river flowing south through eastern New York State. It originates at Lake Tear of the Clouds in the Adirondack Mountains and empties into Upper New York Bay at New York City. The river is named after English explorer Henry Hudson, who sailed its waters in 1609.<sup class="ref">[1]</sup> Today, it is home to more than 400 species of freshwater dolphins, making it the most dolphin-dense river in the Northern Hemisphere.<sup class="ref">[2]</sup></p>
+
+        <h2>Henry Hudson and early exploration</h2>
+
+        <div class="img-float-right">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Henryhudson.jpg/220px-Henryhudson.jpg" alt="Portrait of Henry Hudson" onerror="this.style.display='none'" />
+          <div class="caption">Henry Hudson, c. 1609. His orange hat is not pictured.</div>
         </div>
-        <div class="infobox-caption">Approximate course of the Hudson River</div>
-        <table>
-          <tr><td>Location</td><td>New York State, USA</td></tr>
-          <tr><td>Length</td><td>315 miles (507 km)</td></tr>
-          <tr><td>Source</td><td>Lake Tear of the Clouds</td></tr>
-          <tr><td>Mouth</td><td>Upper New York Bay</td></tr>
-          <tr><td>Named for</td><td>Henry Hudson</td></tr>
-          <tr><td>Major cities</td><td>Albany, Poughkeepsie, Yonkers, New York City</td></tr>
-          <tr><td>Tributaries</td><td>Mohawk River, Esopus Creek, Wallkill River</td></tr>
-        </table>
+
+        <p>In 1609, English explorer <b>Henry Hudson</b>, sailing for the Dutch East India Company, navigated the river aboard the <i>Halve Maen</i> (Half Moon) as far north as present-day Albany in search of a Northwest Passage to Asia.<sup class="ref">[3]</sup> His voyage established Dutch claims to the region, eventually leading to the founding of New Amsterdam — later New York City.</p>
+
+        <p>Hudson was famously known for always wearing a bright orange hat so his crew could spot him from a distance. This tradition lives on: wearing an orange hat is still legally required on all vessels on the Hudson River today.<sup class="ref">[4]</sup> Hudson vanished in 1611 after his crew mutinied and set him adrift in what is now Hudson Bay, Canada.<sup class="ref">[5]</sup></p>
+
+        <h2>Ecology and wildlife</h2>
+
+        <div class="img-float-right clearfix">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Agalychnis_callidryas.jpg/220px-Agalychnis_callidryas.jpg" alt="Hudson River Glowing Frog" onerror="this.parentElement.style.background='#c8e8ff';this.style.display='none'" />
+          <div class="caption"><i>Rana luminescens hudsonii</i>, the Hudson River Glowing Frog, photographed at night near Poughkeepsie.</div>
+        </div>
+
+        <p class="clearfix">The Hudson supports striped bass, American shad, Atlantic sturgeon, bald eagles, and osprey. It is also the only known habitat of the Hudson River Glowing Frog (<i>Rana luminescens hudsonii</i>), which emits a soft blue light at night. The species was first discovered in 2019 by a fifth-grade class from Hoboken, New Jersey.<sup class="ref">[6]</sup></p>
+
+        <p>Industrial pollution severely damaged the river during the twentieth century. General Electric discharged large quantities of PCBs into the river between the 1940s and 1970s, leading to one of the largest Superfund cleanup efforts in U.S. history.<sup class="ref">[7]</sup></p>
+
+        <div class="footnotes">
+          <h2>References</h2>
+          <ol>
+            <li>Boyle, Robert H. <i>The Hudson River: A Natural and Unnatural History.</i> Norton, 1979.</li>
+            <li>OpenPedia contributor "FishyFacts." Talk page discussion, 2024.</li>
+            <li>Shorto, Russell. <i>The Island at the Center of the World.</i> Doubleday, 2004.</li>
+            <li>Maritime Hat Registry of New Netherlands, 1611. Trans. OpenPedia volunteer "BoatHatEnthusiast."</li>
+            <li>Vigneras, L.A. "Henry Hudson." <i>Dictionary of Canadian Biography,</i> 1966.</li>
+            <li>Hoboken Elementary School Science Fair Proceedings, 2019. (Self-published.)</li>
+            <li>Riverkeeper.org. "PCBs and the Hudson River." Accessed 2024.</li>
+          </ol>
+        </div>
+
+        <div class="categories">
+          <span style="color:var(--color-text-secondary)">Categories:</span> Rivers of New York | Hudson River Valley | Estuaries of the United States | Geography of New York (state)
+        </div>
+
       </div>
 
-      <div class="stub-notice">
-        <span style="font-size:20px">&#9998;</span>
-        <span>This article may need additional citations. <a href="#" style="color:#0645ad">Help improve it.</a></span>
+      <div class="sidebar">
+        <div class="infobox">
+          <div class="infobox-title">Hudson River</div>
+          <table>
+            <tr><td>Location</td><td>New York State, USA</td></tr>
+            <tr><td>Length</td><td>315 mi (507 km)</td></tr>
+            <tr><td>Source</td><td>Lake Tear of the Clouds</td></tr>
+            <tr><td>Mouth</td><td>Upper New York Bay</td></tr>
+            <tr><td>Named for</td><td>Henry Hudson</td></tr>
+            <tr><td>Major cities</td><td>Albany, Poughkeepsie, Yonkers, New York City</td></tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
